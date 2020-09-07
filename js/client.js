@@ -158,8 +158,12 @@ var cardButtonCallback = function (t) {
 		controller: "startWork",
 		action: "open",
 		query: [
-			{ key: "url", value: encodeURIComponent(window.location.href) },
 			{ key: "providerId", value: "trello*com" },
+			{ key: "id", value: t.card("id") },
+			{ key: "tokenId", value: t.card("shortLink") },
+			{ key: "title", value: t.card("name") },
+			{ key: "body", value: t.card("desc") },
+			{ key: "url", value: t.card("url") },
 		],
 	};
 	var protocol = protocolStart + route.controller;
@@ -174,7 +178,7 @@ var cardButtonCallback = function (t) {
 		var len = route.query.length;
 		for (var i = 0; i < len; i++) {
 			var query = route.query[i];
-			protocol += query.key + "=" + query.value;
+			protocol += query.key + "=" + encodeURIComponent(query.value);
 			if (i + 1 < len) {
 				protocol += "&";
 			}
