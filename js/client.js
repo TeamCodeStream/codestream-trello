@@ -181,7 +181,7 @@ var cardButtonCallback = function (t) {
 		}
 	}
 
-	window.location.href = url;
+	window.location.href = protocol;
 };
 
 // We need to call initialize to get all of our capability handles set up and registered with Trello
