@@ -146,46 +146,49 @@ var getBadges = function (t) {
 };
 
 var cardButtonCallback = function (t) {
-	var ide = {
-		ideName: "VS Code",
-		protocol: "vscode://codestream.codestream/",
-		moniker: "vsc",
-		downloadUrl: "https://marketplace.visualstudio.com/items?itemName=CodeStream.codestream",
-	};
+	t.card("id", "shortLink", "name", "desc", "url").then(function (card) {
+		var ide = {
+			ideName: "VS Code",
+			protocol: "vscode://codestream.codestream/",
+			moniker: "vsc",
+			downloadUrl:
+				"https://marketplace.visualstudio.com/items?itemName=CodeStream.codestream",
+		};
 
-	var protocolStart = ide.protocol;
-	var route = {
-		controller: "startWork",
-		action: "open",
-		query: [
-			{ key: "providerId", value: "trello*com" },
-			{ key: "id", value: t.card("id") },
-			{ key: "tokenId", value: t.card("shortLink") },
-			{ key: "title", value: t.card("name") },
-			{ key: "body", value: t.card("desc") },
-			{ key: "url", value: t.card("url") },
-		],
-	};
-	var protocol = protocolStart + route.controller;
-	if (route.id) {
-		protocol += "/" + route.id;
-	}
-	if (route.action) {
-		protocol += "/" + route.action;
-	}
-	if (route.query && route.query.length) {
-		protocol += "?1=1&";
-		var len = route.query.length;
-		for (var i = 0; i < len; i++) {
-			var query = route.query[i];
-			protocol += query.key + "=" + encodeURIComponent(query.value);
-			if (i + 1 < len) {
-				protocol += "&";
+		var protocolStart = ide.protocol;
+		var route = {
+			controller: "startWork",
+			action: "open",
+			query: [
+				{ key: "providerId", value: "trello*com" },
+				{ key: "id", value: card.id },
+				{ key: "tokenId", value: card.shortLink },
+				{ key: "title", value: card.name },
+				{ key: "body", value: card.desc },
+				{ key: "url", value: card.url },
+			],
+		};
+		var protocol = protocolStart + route.controller;
+		if (route.id) {
+			protocol += "/" + route.id;
+		}
+		if (route.action) {
+			protocol += "/" + route.action;
+		}
+		if (route.query && route.query.length) {
+			protocol += "?1=1&";
+			var len = route.query.length;
+			for (var i = 0; i < len; i++) {
+				var query = route.query[i];
+				protocol += query.key + "=" + encodeURIComponent(query.value);
+				if (i + 1 < len) {
+					protocol += "&";
+				}
 			}
 		}
-	}
 
-	window.location.href = protocol;
+		window.location.href = protocol;
+	});
 };
 
 // We need to call initialize to get all of our capability handles set up and registered with Trello
