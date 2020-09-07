@@ -147,6 +147,7 @@ var getBadges = function (t) {
 
 var cardButtonCallback = function (t) {
 	t.card("id", "shortLink", "name", "desc", "url").then(function (card) {
+		console.log("Got a card", card);
 		var ide = {
 			ideName: "VS Code",
 			protocol: "vscode://codestream.codestream/",
